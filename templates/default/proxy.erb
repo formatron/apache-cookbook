@@ -1,0 +1,28 @@
+<VirtualHost *:80>
+  ServerName <%= @hostname %>
+
+  <% unless @ldap.nil? %>
+  <Location "/">
+    AuthType Basic
+    AuthName "<%= @ldap[:auth_name] %>"
+    AuthBasicProvider ldap
+    AuthzLDAPAuthoritative on
+    AuthLDAPURL <%= @ldap[:url] %>
+    <% unless @ldap[:bind_dn].nil? %>
+    AuthLDAPBindDN "<%= @ldap[:bind_dn] %>"
+    AuthLDAPBindPassword <%= @ldap[:bind_password] %>
+    <% end %>
+    Require valid-user
+  </Location>
+  <% end %>
+
+  ProxyRequests               Off
+  SSLProxyEngine              On
+  ProxyPreserveHost           On
+
+  ProxyPass                   / http://<%= @hostname %>:<%= @port %>/ retry=0
+  ProxyPassReverse            / http://<%= @hostname %>:<%= @port %>/ retry=0
+
+  AccessLog "<%= @log_directory %>/<%= @hostname %>_access.log"
+  ErrorLog "<%= @log_directory %>/<%= @hostname %>_error.log"
+</VirtualHost>
