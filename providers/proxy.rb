@@ -5,13 +5,12 @@ end
 use_inline_resources
 
 action :create do
-  template "#{node['apache']['dir']}/sites-available/#{new_resource.hostname}" do
+  template "#{node['apache']['dir']}/sites-available/#{new_resource.hostname}.conf" do
     cookbook 'formatron_apache'
     source 'proxy.erb'
     variables(
       hostname: "#{new_resource.hostname}",
       port: new_resource.port,
-      log_directory: node['apache']['log_dir'],
       ldap: {
         auth_name: new_resource.ldap_auth_name,
         url: new_resource.ldap_url,
@@ -20,5 +19,4 @@ action :create do
       }
     )
   end
-  apache_site new_resource.hostname
 end
