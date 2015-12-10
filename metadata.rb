@@ -1,5 +1,5 @@
 name 'formatron_apache'
-version '0.1.1'
+version '0.1.2'
 description 'Formatron Apache cookbook'
 source_url 'https://github.com/formatron/apache-cookbook'
 issues_url 'https://github.com/formatron/apache-cookbook/issues'
