@@ -9,7 +9,7 @@ action :create do
     cookbook 'formatron_apache'
     source 'proxy.erb'
     variables(
-      hostname: "#{new_resource.hostname}",
+      hostname: new_resource.hostname,
       proxy_pass: new_resource.proxy_pass,
       ldap: {
         auth_name: new_resource.ldap_auth_name,
