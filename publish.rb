@@ -2,7 +2,9 @@
 
 require 'chef/cookbook/metadata'
 
-category = 'Web Servers'
+fail 'Must specify category' if ARGV.empty?
+
+category = ARGV.shift
 
 metadata = Chef::Cookbook::Metadata.new
 metadata.from_file './metadata.rb'
